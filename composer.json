@@ -15,9 +15,12 @@
     "twig/twig" : "*",
     "doctrine/doctrine-bundle" : "*"
   },
-  "autoload" : {
-    "psr-0" : {
-      "Fyher\\TestBundle" : ""
-    }
+  "autoload": {
+    "psr-4": {
+      "Fyher\\ClientBundle\\": ""
+    },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
   }
 }
