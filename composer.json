@@ -1,0 +1,23 @@
+{
+  "name" : "fyher/clientbundle",
+  "description" : "bundle de gestion client",
+  "type" : "symfony-bundle",
+  "authors" : [{
+    "name" : "Fyher",
+    "email" : "contact@fyher.com"
+  }],
+  "keywords" : [
+    "client bundle"
+  ],
+  "require" : {
+    "php" : "^7.1.3",
+    "symfony/framework-bundle" : ">=4.*",
+    "twig/twig" : "*",
+    "doctrine/doctrine-bundle" : "*"
+  },
+  "autoload" : {
+    "psr-0" : {
+      "MonNom\\TestBundle" : ""
+    }
+  }
+}
