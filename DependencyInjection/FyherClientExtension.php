@@ -12,17 +12,19 @@ class FyherClientExtension extends Extension implements PrependExtensionInterfac
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-       /* $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+        $loader->load('command.xml');
         $config = $this->processConfiguration(new Configuration(), $configs);
-        $container->setParameter('msalsas_voting.negative_reasons', $config['negative_reasons']);
-        $container->setParameter('msalsas_voting.anonymous_percent_allowed', $config['anonymous_percent_allowed']);
+        //var_dump($config);
+        $container->setParameter('fyher_client.rgpd.month_retention', $config['rgpd']['month_retention']);
+      /*  $container->setParameter('msalsas_voting.anonymous_percent_allowed', $config['anonymous_percent_allowed']);
         $container->setParameter('msalsas_voting.anonymous_min_allowed', $config['anonymous_min_allowed']);*/
     }
     public function prepend(ContainerBuilder $container)
     {
-       // $configs = $container->getExtensionConfig($this->getAlias());
-        //$config = $this->processConfiguration(new Configuration(), $configs);
+        $configs = $container->getExtensionConfig($this->getAlias());
+        $config = $this->processConfiguration(new Configuration(), $configs);
         $doctrineConfig = [];
        // $doctrineConfig['orm']['resolve_target_entities']['Msalsas\VotingBundle\Entity\Vote\UserInterface'] = $config['user_provider'];
         $doctrineConfig['orm']['mappings'][] = array(
