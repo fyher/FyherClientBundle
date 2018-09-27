@@ -1,0 +1,19 @@
+<table>
+    <thead>
+        <tr>
+            <th>{{ "fyher.table.nomclient" | trans({}) }}</th>
+        </tr>
+    </thead>
+    <tbody>
+
+{% for listeclient in pagination %}
+        <tr>
+            <td>{{ listeclient.nomClient |capitalize }}</td>
+        </tr>
+    <tr>
+
+    </tr>
+
+{% endfor %}
+    </tbody>
+</table>

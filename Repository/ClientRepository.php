@@ -19,6 +19,19 @@ class ClientRepository extends ServiceEntityRepository
         parent::__construct($registry, Client::class);
     }
 
+
+    public function clientRetentionRgpd($dateLimite){
+
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.dateCreationClient < :dateRetention')
+            ->andWhere("c.rgpdActiveClient= :rgpd")
+            ->setParameter('dateRetention', $dateLimite->format("Y-m-d"))
+            ->setParameter("rgpd",false)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 //    /**
 //     * @return Client[] Returns an array of Client objects
 //     */

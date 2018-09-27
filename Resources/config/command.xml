@@ -5,10 +5,13 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="fyher_client.fyher.testclient" class="Fyher\ClientBundle\Command\ConfigCommand">
-            <tag name="console.command" command="fyher_client:fyher:test" />
+       
+        <service id="fyher_client.install.param" class="Fyher\ClientBundle\Command\InstallCommand">
+            <tag name="console.command" command="fyher_client:install:param" />
         </service>
-
+        <service id=" fyher_client.rgpd.check" class="Fyher\ClientBundle\Command\RgpdCommand">
+            <tag name="console.command" command="fyher_client:rgpd:check" />
+        </service>
     </services>
 
 </container>

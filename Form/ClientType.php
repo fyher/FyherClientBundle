@@ -1,0 +1,59 @@
+<?php
+
+namespace Fyher\ClientBundle\Form;
+
+
+
+use Doctrine\DBAL\Types\TextType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Vich\UploaderBundle\Form\Type\VichFileType;
+
+
+class ClientType extends AbstractType
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+
+        $builder->add("nomClient",\Symfony\Component\Form\Extension\Core\Type\TextType::class,array("label"=>"fyher.form.nomclient"));
+        $builder->add("prenomClient",\Symfony\Component\Form\Extension\Core\Type\TextType::class,array("label"=>"fyher.form.prenomclient"));
+        $builder->add("adresseClient",\Symfony\Component\Form\Extension\Core\Type\TextType::class,array("label"=>"fyher.form.adresseclient"));
+        $builder->add("villeClient",\Symfony\Component\Form\Extension\Core\Type\TextType::class,array("label"=>"fyher.form.villeclient"));
+        $builder->add("codePostalClient",\Symfony\Component\Form\Extension\Core\Type\TextType::class,array("label"=>"fyher.form.codepostalclient"));
+        $builder->add("numeroFixeClient",\Symfony\Component\Form\Extension\Core\Type\TextType::class,array("label"=>"fyher.form.numeroficeclient"));
+        $builder->add("numeroMobileClient",\Symfony\Component\Form\Extension\Core\Type\TextType::class,array("label"=>"fyher.form.numeromobileclient"));
+        $builder->add("departementNomClient",\Symfony\Component\Form\Extension\Core\Type\TextType::class,array("label"=>"fyher.form.departementnomclient"));
+        $builder->add("departementCodeClient",\Symfony\Component\Form\Extension\Core\Type\TextType::class,array("label"=>"fyher.form.departementcodeclient"));
+        $builder->add("paysClient",CountryType::class,array("label"=>"fyher.form.paysclient","placeholder"=>"fyher.form.paysclient"));
+        $builder->add("codeInseeVilleClient",\Symfony\Component\Form\Extension\Core\Type\TextType::class,array("label"=>"fyher.form.codeinseevilleclient"));
+
+
+
+    }/**
+ * {@inheritdoc}
+ */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'Fyher\ClientBundle\Entity\Client'
+        ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'fyherbundle_client_addd';
+    }
+
+
+}

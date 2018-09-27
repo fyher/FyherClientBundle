@@ -1,0 +1,13 @@
+fyher:
+  form:
+    nomclient: Le nom du client
+    prenomclient: Le prénom du client
+    adresseclient: L'adresse du client
+    villeclient: La ville du Client
+    codepostalclient: Le code postal du client
+    numeroficeclient: Numéro de fixe du client
+    numeromobileclient: numéro de mobile du client
+    departementnomclient: le nom du département
+    departementcodeclient: Le numéro du département
+    paysclient: Le pays du client
+    codeinseevilleclient: Le code insee de la ville

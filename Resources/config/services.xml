@@ -7,4 +7,20 @@ http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
         <parameter key="fyher_client.rgpd.month_retention" />
     </parameters>
+
+    <services>
+        <prototype namespace="Fyher\ClientBundle\Repository\" resource="../../Repository/*Repository.php" autowire="true">
+            <tag name="doctrine.repository_service"></tag>
+        </prototype>
+        <service id="Fyher\ClientBundle\Services\GestionStatutClientService" public="true" autowire="true">
+
+        </service>
+        <service id="client.gestion" alias="Fyher\ClientBundle\Services\GestionStatutClientService" public="true">
+
+        </service>
+    </services>
+
+
 </container>
+
+

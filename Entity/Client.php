@@ -21,26 +21,17 @@ use Fyher\ClientBundle\Validator\Constraints as FyherAssert;
 
 
 /**
- * @ORM\Table(name="Client_fyher")
- * @ORM\Entity(repositoryClass="Fyher\ClientBundle\Repository\ClientRepository")
+ * @ORM\MappedSuperclass()
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity("emailClient")
  */
-class Client
+abstract  class Client
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     *
-     */
-    private $id;
+
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false, name="nomClient")
      * @Assert\NotBlank(message="fyher.entity.notblank")
      * @Assert\Length(
      *     min=1,
@@ -63,11 +54,18 @@ class Client
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=false, unique=true, length=200)
+     * @ORM\Column(type="string", nullable=false, length=200)
      * @Assert\Email()
      * @Assert\NotBlank(message="fyher.entity.notblank")
      */
     private $emailClient;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=false)
+     * @Assert\NotBlank(message="fyher.entity.notblank")
+     */
+    private $statutClient;
 
     /**
      * @var string
@@ -203,6 +201,41 @@ class Client
     private $optinClient;
 
     /**
+     * @var floaat
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $longitudeClient;
+
+
+    /**
+     * @var floaat
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $latitudeClient;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=false)
+     * @Assert\NotBlank(message="fyher.entity.notblank")
+     */
+    private $civiliteClient;
+
+    /**
+     * @var datetime
+     * @ORM\Column(type="datetime", nullable=false)
+     * @Assert\NotBlank(message="fyher.entity.notblank")
+     * @Assert\GreaterThanOrEqual("- 18 years")
+     */
+    private $dateAnniversaireClient;
+
+
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $rgpdActiveClient;
+
+    /**
      * @var boolean
      * @ORM\Column(type="boolean", nullable=false)
      */
@@ -211,24 +244,24 @@ class Client
     /**
      * @var text
      * @Gedmo\Slug(fields={"hashClient"})
-     * @ORM\Column(length=255,nullable=false,unique=true)
+     * @ORM\Column(length=255,nullable=false)
      */
     private $slugClient;
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="Fyher\ClientBundle\Entity\SourceClient")
+     * @ORM\ManyToMany(targetEntity="Fyher\ClientBundle\Entity\SourceClient" , fetch="EXTRA_LAZY" , cascade={"remove"})
      */
     private $idSourceClient;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Fyher\ClientBundle\Entity\Alarme")
+     * @ORM\ManyToMany(targetEntity="Fyher\ClientBundle\Entity\Alarme" , fetch="EXTRA_LAZY" , cascade={"remove"})
      * @ORM\OrderBy({"dateCreationAlarme"="DESC"})
      */
     private $idAlarmeClient;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Fyher\ClientBundle\Entity\Notes")
+     * @ORM\ManyToMany(targetEntity="Fyher\ClientBundle\Entity\Notes" , fetch="EXTRA_LAZY" , cascade={"remove"})
      * @ORM\OrderBy({"dateCreationNote"="DESC"})
      */
     private $idNoteClient;
@@ -550,6 +583,78 @@ class Client
         if ($this->idNoteClient->contains($idNoteClient)) {
             $this->idNoteClient->removeElement($idNoteClient);
         }
+
+        return $this;
+    }
+
+    public function getRgpdActiveClient(): ?bool
+    {
+        return $this->rgpdActiveClient;
+    }
+
+    public function setRgpdActiveClient(bool $rgpdActiveClient): self
+    {
+        $this->rgpdActiveClient = $rgpdActiveClient;
+
+        return $this;
+    }
+
+    public function getCiviliteClient(): ?string
+    {
+        return $this->civiliteClient;
+    }
+
+    public function setCiviliteClient(string $civiliteClient): self
+    {
+        $this->civiliteClient = $civiliteClient;
+
+        return $this;
+    }
+
+    public function getDateAnniversaireClient(): ?\DateTimeInterface
+    {
+        return $this->dateAnniversaireClient;
+    }
+
+    public function setDateAnniversaireClient(\DateTimeInterface $dateAnniversaireClient): self
+    {
+        $this->dateAnniversaireClient = $dateAnniversaireClient;
+
+        return $this;
+    }
+
+    public function getLongitudeClient(): ?float
+    {
+        return $this->longitudeClient;
+    }
+
+    public function setLongitudeClient(?float $longitudeClient): self
+    {
+        $this->longitudeClient = $longitudeClient;
+
+        return $this;
+    }
+
+    public function getLatitudeClient(): ?float
+    {
+        return $this->latitudeClient;
+    }
+
+    public function setLatitudeClient(?float $latitudeClient): self
+    {
+        $this->latitudeClient = $latitudeClient;
+
+        return $this;
+    }
+
+    public function getStatutClient(): ?string
+    {
+        return $this->statutClient;
+    }
+
+    public function setStatutClient(string $statutClient): self
+    {
+        $this->statutClient = $statutClient;
 
         return $this;
     }
