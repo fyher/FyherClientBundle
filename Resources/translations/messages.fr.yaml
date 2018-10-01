@@ -20,6 +20,17 @@ fyher:
     mobilerappelalarme: Mobile rappel alarme
     daterappelalarme: Date de rappel de l'alarme
 
+  table:
+    nomclient: Nom
+    telephoneclient: Téléphone
+    statutclient: Statut
+    adresseclient: Adresse
+    datecreation: Date
+    sourceclient: Source
+    noteclient: Note
+    nbclient: client(s)
+    emailclient: Email
+
   email:
     subject:
       rappelalarme: Rappel alarme

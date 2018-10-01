@@ -31,6 +31,9 @@ http://symfony.com/schema/dic/services/services-1.0.xsd">
         <service id="fyher.email" alias="Fyher\ClientBundle\Services\SendEmail" public="true">
 
         </service>
+        <service id="Fyher\ClientBundle\Twig\PhoneExtension">
+            <tag name="twig.extension"></tag>
+        </service>
     </services>
 
 

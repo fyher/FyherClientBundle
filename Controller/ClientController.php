@@ -30,7 +30,15 @@ class ClientController extends AbstractController
 
         $liste=$this->getDoctrine()->getRepository(get_class($client))->findAll();
 
-        return $this->render("@FyherClient/client/index.html.twig",array("pagination"=>$liste));
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $liste, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+
+        return $this->render("@FyherClient/client/index.html.twig",array("pagination"=>$pagination));
 
     }
 
