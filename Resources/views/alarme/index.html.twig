@@ -1,0 +1,8 @@
+{% for alarme in liste %}
+    {{ alarme.dateRappelAlarme | date("Y-m-d H:i") }}
+    {{ alarme.descriptionAlarme |raw }}
+    {{ alarme.emailRappelAlarme }}
+    {{ alarme.mobileRappelAlarme }}
+    {{ alarme.idClient }}
+
+{% endfor %}

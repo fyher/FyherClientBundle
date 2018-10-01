@@ -1,0 +1,7 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{{ form_start(form, { 'attr': {'novalidate': 'novalidate',"id":"formnote" } }) }}
+
+        {{ form_widget(form) }}
+<input type="submit" value="Enregistrer" class="btn btn-fw success btn-block" />
+{{ form_end(form) }}

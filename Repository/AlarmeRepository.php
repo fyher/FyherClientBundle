@@ -19,6 +19,20 @@ class AlarmeRepository extends ServiceEntityRepository
         parent::__construct($registry, Alarme::class);
     }
 
+
+    public function alertedujour(){
+        $datejour=new \DateTime();
+
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.dateRappelAlarme like :date ')
+            ->andWhere('a.luAlarme=0')
+            ->setParameter('date', $datejour->format("Y-m-d").'%')
+            ->getQuery()
+            ->getResult()
+            ;
+
+    }
+
 //    /**
 //     * @return Alarme[] Returns an array of Alarme objects
 //     */

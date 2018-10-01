@@ -11,3 +11,15 @@ fyher:
     departementcodeclient: Le numéro du département
     paysclient: Le pays du client
     codeinseevilleclient: Le code insee de la ville
+    titrenote: titre de la note
+    descriptionnote: Description de la note
+    emailauteur: email de l'auteur
+    titrealarme: Titre de l'alarme
+    descriptionalarme: Description de l'alarme
+    emailrappelalarme: Email de l'auteur
+    mobilerappelalarme: Mobile rappel alarme
+    daterappelalarme: Date de rappel de l'alarme
+
+  email:
+    subject:
+      rappelalarme: Rappel alarme

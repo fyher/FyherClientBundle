@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Accroche controller.
+ * Client controller.
  *
  * @Route("client" , name="client_")
  */
@@ -25,8 +25,10 @@ class ClientController extends AbstractController
     public function index(Request $request)
     {
 
+        $classclient=$this->container->getParameter("fyher_client.user_class");
+        $client=new $classclient();
 
-        $liste=$this->getDoctrine()->getRepository("FyherClientBundle:Client")->findAll();
+        $liste=$this->getDoctrine()->getRepository(get_class($client))->findAll();
 
         return $this->render("@FyherClient/client/index.html.twig",array("pagination"=>$liste));
 
@@ -39,14 +41,13 @@ class ClientController extends AbstractController
     public function addClientAction(Request $request){
 
 
-        $client=new \App\Entity\Client();
+        $classclient=$this->container->getParameter("fyher_client.user_class");
 
-        $client=new Client();
-        $form=$this->createForm(ClientType::class,$client);
+        $client=new $classclient();
 
+        $form=$this->createForm(ClientType::class,null);
 
         $form->handleRequest($request);
-
 
         if($form->isSubmitted() && $form->isValid()){
 
@@ -69,9 +70,12 @@ class ClientController extends AbstractController
      */
     public function editClientAction(Request $request,$hashClient){
 
-        $clientExiste=$this->getDoctrine()->getRepository("FyherClientBundle:Client")->findOneBy(array("hashClient"=>$hashClient));
+        $classclient=$this->container->getParameter("fyher_client.user_class");
+        $client=new $classclient();
 
-        if(!$hashClient){
+        $clientExiste=$this->getDoctrine()->getRepository(get_class($client))->findOneBy(array("hashClient"=>$hashClient));
+
+        if(!$clientExiste){
             throw $this->createNotFoundException("le client existe pas");
         }
 
@@ -97,9 +101,12 @@ class ClientController extends AbstractController
      * @Route("/deleteclient/{hashClient}" , name="delete_client")
      */
     public function deleteAction(Request $request,$hashClient){
-        $clientExiste=$this->getDoctrine()->getRepository("FyherClientBundle:Client")->findOneBy(array("hashClient"=>$hashClient));
+        $classclient=$this->container->getParameter("fyher_client.user_class");
+        $client=new $classclient();
 
-        if(!$hashClient){
+        $clientExiste=$this->getDoctrine()->getRepository(get_class($client))->findOneBy(array("hashClient"=>$hashClient));
+
+        if(!$clientExiste){
             throw $this->createNotFoundException("le client existe pas");
         }
 

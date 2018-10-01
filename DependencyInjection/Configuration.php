@@ -24,10 +24,9 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->arrayNode('rgpd')
+            ->arrayNode('user')
             ->children()
-            ->integerNode('month_retention')->isRequired()
-                ->defaultValue(2)
+            ->scalarNode('class')->isRequired()->cannotBeEmpty()->end()
             ->end()
             ->end()
             ->end() // twitter

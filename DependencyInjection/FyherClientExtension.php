@@ -17,7 +17,7 @@ class FyherClientExtension extends Extension implements PrependExtensionInterfac
         $loader->load('command.xml');
         $config = $this->processConfiguration(new Configuration(), $configs);
         //var_dump($config);
-        $container->setParameter('fyher_client.rgpd.month_retention', $config['rgpd']['month_retention']);
+        $container->setParameter('fyher_client.user_class', $config['user']["class"]);
       /*  $container->setParameter('msalsas_voting.anonymous_percent_allowed', $config['anonymous_percent_allowed']);
         $container->setParameter('msalsas_voting.anonymous_min_allowed', $config['anonymous_min_allowed']);*/
     }

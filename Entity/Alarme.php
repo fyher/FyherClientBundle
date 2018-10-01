@@ -97,6 +97,13 @@ class Alarme
     private $dateLuAlarme;
 
 
+    /**
+     * @var integer
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $idClient;
+
+
 
     /**
      * @ORM\PrePersist
@@ -207,6 +214,20 @@ class Alarme
 
         return $this;
     }
+
+    public function getIdClient(): ?int
+    {
+        return $this->idClient;
+    }
+
+    public function setIdClient(int $idClient): self
+    {
+        $this->idClient = $idClient;
+
+        return $this;
+    }
+
+
 
    
 }

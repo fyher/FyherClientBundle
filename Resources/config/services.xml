@@ -18,6 +18,19 @@ http://symfony.com/schema/dic/services/services-1.0.xsd">
         <service id="client.gestion" alias="Fyher\ClientBundle\Services\GestionStatutClientService" public="true">
 
         </service>
+        <service id="Fyher\ClientBundle\Form\ClientType">
+            <argument>%fyher_client.user_class%</argument>
+            <tag name="form.type" />
+        </service>
+        <service id="Fyher\ClientBundle\Services\SendEmail" public="true" autowire="true">
+            <argument type="service" id="swiftmailer.mailer"/>
+            <argument type="service" id="templating.engine.twig"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="translator"></argument>
+        </service>
+        <service id="fyher.email" alias="Fyher\ClientBundle\Services\SendEmail" public="true">
+
+        </service>
     </services>
 
 

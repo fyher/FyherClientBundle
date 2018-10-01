@@ -9,9 +9,13 @@
         <service id="fyher_client.install.param" class="Fyher\ClientBundle\Command\InstallCommand">
             <tag name="console.command" command="fyher_client:install:param" />
         </service>
-        <service id=" fyher_client.rgpd.check" class="Fyher\ClientBundle\Command\RgpdCommand">
+        <service id="fyher_client.rgpd.check" class="Fyher\ClientBundle\Command\RgpdCommand">
             <tag name="console.command" command="fyher_client:rgpd:check" />
         </service>
+        <service id="fyher_client.alarme.start" class="Fyher\ClientBundle\Command\AlarmeCommand">
+            <tag name="console.command" command="fyher_client:alarme:start" />
+        </service>
+
     </services>
 
 </container>

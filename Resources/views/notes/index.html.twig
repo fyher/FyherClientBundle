@@ -1,0 +1,7 @@
+{% for note in listeNote %}
+    {{ note.tite |capitalize }}
+    {{ descriptionNote |capitalize }}
+    {{ dateCreationNote |date("Y-m-d H:i") }}
+    {{ emailAuteurNote  }}
+
+{% endfor %}
