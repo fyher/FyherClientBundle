@@ -29,6 +29,9 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('class')->isRequired()->cannotBeEmpty()->end()
             ->end()
             ->end()
+            ->arrayNode('token')
+            ->children()
+            ->scalarNode('map')->isRequired()->cannotBeEmpty()->end()
             ->end() // twitter
             ->end()
         ;

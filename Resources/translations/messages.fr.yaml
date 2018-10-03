@@ -19,6 +19,11 @@ fyher:
     emailrappelalarme: Email de l'auteur
     mobilerappelalarme: Mobile rappel alarme
     daterappelalarme: Date de rappel de l'alarme
+    choisircivilite: Choisir une civilité
+    civiliteclient: Civilité
+
+  action:
+    modificationsucess: Information modifiée avec succés
 
   table:
     nomclient: Nom

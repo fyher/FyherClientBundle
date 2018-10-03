@@ -41,14 +41,22 @@ class SourceClient
     private $dateCreationSourceClient;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Fyher\ClientBundle\Entity\Source")
+     * @ORM\ManyToOne(targetEntity="Fyher\ClientBundle\Entity\Source")
      */
     private $idSource;
 
-    public function __construct()
-    {
-        $this->idSource = new ArrayCollection();
-    }
+
+    /**
+     * @var array
+     * @ORM\Column(type="array", nullable=false)
+     */
+    private $dataSourceClient;
+
+    /**
+     * @var integer
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $idClient;
 
     public function getId(): ?int
     {
@@ -67,29 +75,40 @@ class SourceClient
         return $this;
     }
 
-    /**
-     * @return Collection|Source[]
-     */
-    public function getIdSource(): Collection
+    public function getIdSource(): ?Source
     {
         return $this->idSource;
     }
 
-    public function addIdSource(Source $idSource): self
+    public function setIdSource(?Source $idSource): self
     {
-        if (!$this->idSource->contains($idSource)) {
-            $this->idSource[] = $idSource;
-        }
+        $this->idSource = $idSource;
 
         return $this;
     }
 
-    public function removeIdSource(Source $idSource): self
+    public function getIdClient(): ?int
     {
-        if ($this->idSource->contains($idSource)) {
-            $this->idSource->removeElement($idSource);
-        }
+        return $this->idClient;
+    }
+
+    public function setIdClient(int $idClient): self
+    {
+        $this->idClient = $idClient;
 
         return $this;
     }
+
+    public function getDataSourceClient()
+    {
+        return $this->dataSourceClient;
+    }
+
+    public function setDataSourceClient($dataSourceClient): self
+    {
+        $this->dataSourceClient = $dataSourceClient;
+
+        return $this;
+    }
+
 }

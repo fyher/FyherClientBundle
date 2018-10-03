@@ -3,6 +3,8 @@
 namespace Fyher\ClientBundle\Controller;
 
 use Fyher\ClientBundle\Entity\Client;
+use Fyher\ClientBundle\Entity\Source;
+use Fyher\ClientBundle\Entity\SourceClient;
 use Fyher\ClientBundle\Form\ClientHandler;
 use Fyher\ClientBundle\Form\ClientType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -53,9 +55,10 @@ class ClientController extends AbstractController
 
         $client=new $classclient();
 
-        $form=$this->createForm(ClientType::class,null);
+        $form=$this->createForm(ClientType::class,$client);
 
         $form->handleRequest($request);
+
 
         if($form->isSubmitted() && $form->isValid()){
 
@@ -87,18 +90,48 @@ class ClientController extends AbstractController
             throw $this->createNotFoundException("le client existe pas");
         }
 
+        if(!$clientExiste->getLatitudeClient()){
+            $infoadresse= $this->get("fyher.geoloc")->geoloc($clientExiste->getAdresseClient()." ".$clientExiste->getCodePostalClient()." ".$clientExiste->getVilleClient());
+
+
+            if($infoadresse){
+                $infoadr=$infoadresse;
+                $clientExiste->setLatitudeClient($infoadr["latitude"]);
+                $clientExiste->setLongitudeClient($infoadr["longitude"]);
+                $em=$this->getDoctrine()->getManager();
+                $em->flush();
+            }
+        }
+
         $form=$this->createForm(ClientType::class,$clientExiste);
-
         $form->handleRequest($request);
-
         if($form->isSubmitted() && $form->isValid()){
 
             $em=$this->getDoctrine()->getManager();
             $em->flush();
+            $this->addFlash('success','fyher.action.modificationsucess');
             return $this->redirectToRoute("client_client_liste");
         }
 
-        return $this->render("@FyherClient/client/new.html.twig",array("form"=>$form->createView()));
+        $tokenMap=$this->container->getParameter("fyher_client.token_map");
+
+        $listelog=$this->getDoctrine()->getRepository("Gedmo\Loggable\Entity\LogEntry")->findBy(array("objectId"=>$clientExiste->getId(),"objectClass"=>get_class($client)),array("loggedAt"=>"DESC"));
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $listelog, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+
+        $listesource=$this->getDoctrine()->getRepository("FyherClientBundle:SourceClient")->findBy(array("idClient"=>$clientExiste->getId()));
+
+
+
+
+        $referer = $request->headers->get('referer');
+        return $this->render("@FyherClient/client/new.html.twig",array("form"=>$form->createView(),"client"=>$clientExiste,
+            "pagination"=>$pagination,"referer"=>$referer,"listesource"=>$listesource,"tokenMap"=>$tokenMap));
 
     }
 
@@ -124,5 +157,26 @@ class ClientController extends AbstractController
         return $this->redirectToRoute("client_client_liste");
 
 
+    }
+
+    /**
+     * @param Request $request
+     * @param $hashClient
+     * @param $statut
+     * @Route("/activationclient/{hashClient}/{statut}", name="activation_client")
+     */
+    public function activationClientAction(Request $request,$hashClient,$statut){
+        $classclient=$this->container->getParameter("fyher_client.user_class");
+        $client=new $classclient();
+        $clientExiste=$this->getDoctrine()->getRepository(get_class($client))->findOneBy(array("hashClient"=>$hashClient));
+
+        if(!$clientExiste){
+            throw $this->createNotFoundException("le client existe pas");
+        }
+        $clientExiste->setActiveClient($statut);
+        $this->getDoctrine()->getManager()->flush();
+        $referer = $request->headers->get('referer');
+        $this->addFlash('success','fyher.action.modificationsucess');
+        return $this->redirect($referer);
     }
 }

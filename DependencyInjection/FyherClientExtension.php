@@ -18,6 +18,7 @@ class FyherClientExtension extends Extension implements PrependExtensionInterfac
         $config = $this->processConfiguration(new Configuration(), $configs);
         //var_dump($config);
         $container->setParameter('fyher_client.user_class', $config['user']["class"]);
+        $container->setParameter('fyher_client.token_map', $config['token']["map"]);
       /*  $container->setParameter('msalsas_voting.anonymous_percent_allowed', $config['anonymous_percent_allowed']);
         $container->setParameter('msalsas_voting.anonymous_min_allowed', $config['anonymous_min_allowed']);*/
     }

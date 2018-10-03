@@ -24,46 +24,52 @@ use Fyher\ClientBundle\Validator\Constraints as FyherAssert;
  * @ORM\MappedSuperclass()
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity("emailClient")
+ * @Gedmo\Loggable(logEntryClass="Gedmo\Loggable\Entity\LogEntry")
+ *
  */
-abstract  class Client
+abstract class Client
 {
 
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=false, name="nomClient")
+     * @ORM\Column(type="string", nullable=true, name="nomClient")
      * @Assert\NotBlank(message="fyher.entity.notblank")
      * @Assert\Length(
      *     min=1,
      *     minMessage="fyher.entity.minlengh"
      * )
+     * @Gedmo\Versioned()
      */
     private $nomClient;
 
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @Assert\NotBlank(message="fyher.entity.notblank")
      * @Assert\Length(
      *     min=1,
      *     minMessage="fyher.entity.minlengh"
      * )
+     * @Gedmo\Versioned()
      */
     private $prenomClient;
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=false, length=200)
+     * @ORM\Column(type="string", nullable=true, length=200)
      * @Assert\Email()
      * @Assert\NotBlank(message="fyher.entity.notblank")
+     * @Gedmo\Versioned()
      */
     private $emailClient;
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @Assert\NotBlank(message="fyher.entity.notblank")
+     * @Gedmo\Versioned()
      */
     private $statutClient;
 
@@ -77,6 +83,7 @@ abstract  class Client
      *     minMessage="fyher.entity.minlengh",
      * maxMessage="fyher.entity.maxlength"
      * )
+     * @Gedmo\Versioned()
      */
     private $numeroFixeClient;
 
@@ -84,13 +91,14 @@ abstract  class Client
      * @var string
      * @ORM\Column(type="string", nullable=true,length=35)
      * @FyherAssert\Telephone()
+     * @Gedmo\Versioned()
      */
     private $numeroMobileClient;
 
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @Assert\NotBlank(message="fyher.entity.notblank")
      * @Assert\Length(
      *     min=4,
@@ -98,22 +106,24 @@ abstract  class Client
      *     minMessage="fyher.entity.minlengh",
      * maxMessage="fyher.entity.maxlength"
      * )
+     * @Gedmo\Versioned()
      */
     private $codePostalClient;
 
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @Assert\NotBlank(message="fyher.entity.notblank")
      * @Assert\Country()
+     * @Gedmo\Versioned()
      */
     private $paysClient;
 
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @Assert\NotBlank(message="fyher.entity.notblank")
      * @Assert\Length(
      *     min=1,
@@ -121,6 +131,7 @@ abstract  class Client
      *     minMessage="fyher.entity.minlengh",
      * maxMessage="fyher.entity.maxlength"
      * )
+     * @Gedmo\Versioned()
      */
     private $villeClient;
 
@@ -134,12 +145,13 @@ abstract  class Client
      *     minMessage="fyher.entity.minlengh",
      * maxMessage="fyher.entity.maxlength"
      * )
+     * @Gedmo\Versioned()
      */
     private $codeInseeVilleClient;
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @Assert\NotBlank(message="fyher.entity.notblank")
      * @Assert\Length(
      *     min=1,
@@ -147,6 +159,7 @@ abstract  class Client
      *     minMessage="fyher.entity.minlengh",
      * maxMessage="fyher.entity.maxlength"
      * )
+     * @Gedmo\Versioned()
      */
     private $adresseClient;
 
@@ -160,6 +173,7 @@ abstract  class Client
      *     minMessage="fyher.entity.minlengh",
      * maxMessage="fyher.entity.maxlength"
      * )
+     * @Gedmo\Versioned()
      */
     private $departementNomClient;
 
@@ -172,37 +186,42 @@ abstract  class Client
      *     minMessage="fyher.entity.minlengh",
      * maxMessage="fyher.entity.maxlength"
      * )
+     * @Gedmo\Versioned()
      */
     private $departementCodeClient;
 
     /**
      * @var datetime
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateCreationClient;
 
     /**
      * @var datetime
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Gedmo\Versioned()
      */
     private $dateUpdateClient;
 
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=false, length=255)
+     * @ORM\Column(type="string", nullable=true, length=255)
+     *
      */
     private $hashClient;
 
     /**
      * @var boolean
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned()
      */
     private $optinClient;
 
     /**
      * @var floaat
      * @ORM\Column(type="float", nullable=true)
+     *
      */
     private $longitudeClient;
 
@@ -215,14 +234,16 @@ abstract  class Client
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @Assert\NotBlank(message="fyher.entity.notblank")
+     * @Gedmo\Versioned()
+     *
      */
     private $civiliteClient;
 
     /**
      * @var datetime
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=true)
      * @Assert\NotBlank(message="fyher.entity.notblank")
      * @Assert\GreaterThanOrEqual("- 18 years")
      */
@@ -231,20 +252,21 @@ abstract  class Client
 
     /**
      * @var boolean
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $rgpdActiveClient;
 
     /**
      * @var boolean
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned()
      */
     private $activeClient;
 
     /**
      * @var text
      * @Gedmo\Slug(fields={"hashClient"})
-     * @ORM\Column(length=255,nullable=false)
+     * @ORM\Column(length=255,nullable=true)
      */
     private $slugClient;
 
@@ -288,17 +310,12 @@ abstract  class Client
 
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getNomClient(): ?string
     {
         return $this->nomClient;
     }
 
-    public function setNomClient(string $nomClient): self
+    public function setNomClient(?string $nomClient): self
     {
         $this->nomClient = $nomClient;
 
@@ -310,7 +327,7 @@ abstract  class Client
         return $this->prenomClient;
     }
 
-    public function setPrenomClient(string $prenomClient): self
+    public function setPrenomClient(?string $prenomClient): self
     {
         $this->prenomClient = $prenomClient;
 
@@ -322,9 +339,21 @@ abstract  class Client
         return $this->emailClient;
     }
 
-    public function setEmailClient(string $emailClient): self
+    public function setEmailClient(?string $emailClient): self
     {
         $this->emailClient = $emailClient;
+
+        return $this;
+    }
+
+    public function getStatutClient(): ?string
+    {
+        return $this->statutClient;
+    }
+
+    public function setStatutClient(?string $statutClient): self
+    {
+        $this->statutClient = $statutClient;
 
         return $this;
     }
@@ -358,7 +387,7 @@ abstract  class Client
         return $this->codePostalClient;
     }
 
-    public function setCodePostalClient(string $codePostalClient): self
+    public function setCodePostalClient(?string $codePostalClient): self
     {
         $this->codePostalClient = $codePostalClient;
 
@@ -370,7 +399,7 @@ abstract  class Client
         return $this->paysClient;
     }
 
-    public function setPaysClient(string $paysClient): self
+    public function setPaysClient(?string $paysClient): self
     {
         $this->paysClient = $paysClient;
 
@@ -382,7 +411,7 @@ abstract  class Client
         return $this->villeClient;
     }
 
-    public function setVilleClient(string $villeClient): self
+    public function setVilleClient(?string $villeClient): self
     {
         $this->villeClient = $villeClient;
 
@@ -406,7 +435,7 @@ abstract  class Client
         return $this->adresseClient;
     }
 
-    public function setAdresseClient(string $adresseClient): self
+    public function setAdresseClient(?string $adresseClient): self
     {
         $this->adresseClient = $adresseClient;
 
@@ -442,7 +471,7 @@ abstract  class Client
         return $this->dateCreationClient;
     }
 
-    public function setDateCreationClient(\DateTimeInterface $dateCreationClient): self
+    public function setDateCreationClient(?\DateTimeInterface $dateCreationClient): self
     {
         $this->dateCreationClient = $dateCreationClient;
 
@@ -454,7 +483,7 @@ abstract  class Client
         return $this->dateUpdateClient;
     }
 
-    public function setDateUpdateClient(\DateTimeInterface $dateUpdateClient): self
+    public function setDateUpdateClient(?\DateTimeInterface $dateUpdateClient): self
     {
         $this->dateUpdateClient = $dateUpdateClient;
 
@@ -466,7 +495,7 @@ abstract  class Client
         return $this->hashClient;
     }
 
-    public function setHashClient(string $hashClient): self
+    public function setHashClient(?string $hashClient): self
     {
         $this->hashClient = $hashClient;
 
@@ -478,9 +507,69 @@ abstract  class Client
         return $this->optinClient;
     }
 
-    public function setOptinClient(bool $optinClient): self
+    public function setOptinClient(?bool $optinClient): self
     {
         $this->optinClient = $optinClient;
+
+        return $this;
+    }
+
+    public function getLongitudeClient(): ?float
+    {
+        return $this->longitudeClient;
+    }
+
+    public function setLongitudeClient(?float $longitudeClient): self
+    {
+        $this->longitudeClient = $longitudeClient;
+
+        return $this;
+    }
+
+    public function getLatitudeClient(): ?float
+    {
+        return $this->latitudeClient;
+    }
+
+    public function setLatitudeClient(?float $latitudeClient): self
+    {
+        $this->latitudeClient = $latitudeClient;
+
+        return $this;
+    }
+
+    public function getCiviliteClient(): ?string
+    {
+        return $this->civiliteClient;
+    }
+
+    public function setCiviliteClient(?string $civiliteClient): self
+    {
+        $this->civiliteClient = $civiliteClient;
+
+        return $this;
+    }
+
+    public function getDateAnniversaireClient(): ?\DateTimeInterface
+    {
+        return $this->dateAnniversaireClient;
+    }
+
+    public function setDateAnniversaireClient(?\DateTimeInterface $dateAnniversaireClient): self
+    {
+        $this->dateAnniversaireClient = $dateAnniversaireClient;
+
+        return $this;
+    }
+
+    public function getRgpdActiveClient(): ?bool
+    {
+        return $this->rgpdActiveClient;
+    }
+
+    public function setRgpdActiveClient(?bool $rgpdActiveClient): self
+    {
+        $this->rgpdActiveClient = $rgpdActiveClient;
 
         return $this;
     }
@@ -490,7 +579,7 @@ abstract  class Client
         return $this->activeClient;
     }
 
-    public function setActiveClient(bool $activeClient): self
+    public function setActiveClient(?bool $activeClient): self
     {
         $this->activeClient = $activeClient;
 
@@ -502,7 +591,7 @@ abstract  class Client
         return $this->slugClient;
     }
 
-    public function setSlugClient(string $slugClient): self
+    public function setSlugClient(?string $slugClient): self
     {
         $this->slugClient = $slugClient;
 
@@ -587,78 +676,6 @@ abstract  class Client
         return $this;
     }
 
-    public function getRgpdActiveClient(): ?bool
-    {
-        return $this->rgpdActiveClient;
-    }
-
-    public function setRgpdActiveClient(bool $rgpdActiveClient): self
-    {
-        $this->rgpdActiveClient = $rgpdActiveClient;
-
-        return $this;
-    }
-
-    public function getCiviliteClient(): ?string
-    {
-        return $this->civiliteClient;
-    }
-
-    public function setCiviliteClient(string $civiliteClient): self
-    {
-        $this->civiliteClient = $civiliteClient;
-
-        return $this;
-    }
-
-    public function getDateAnniversaireClient(): ?\DateTimeInterface
-    {
-        return $this->dateAnniversaireClient;
-    }
-
-    public function setDateAnniversaireClient(\DateTimeInterface $dateAnniversaireClient): self
-    {
-        $this->dateAnniversaireClient = $dateAnniversaireClient;
-
-        return $this;
-    }
-
-    public function getLongitudeClient(): ?float
-    {
-        return $this->longitudeClient;
-    }
-
-    public function setLongitudeClient(?float $longitudeClient): self
-    {
-        $this->longitudeClient = $longitudeClient;
-
-        return $this;
-    }
-
-    public function getLatitudeClient(): ?float
-    {
-        return $this->latitudeClient;
-    }
-
-    public function setLatitudeClient(?float $latitudeClient): self
-    {
-        $this->latitudeClient = $latitudeClient;
-
-        return $this;
-    }
-
-    public function getStatutClient(): ?string
-    {
-        return $this->statutClient;
-    }
-
-    public function setStatutClient(string $statutClient): self
-    {
-        $this->statutClient = $statutClient;
-
-        return $this;
-    }
-   
 
 
 

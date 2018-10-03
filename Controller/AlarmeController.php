@@ -62,7 +62,7 @@ class AlarmeController extends AbstractController
     /**
      * @param Request $request
      * @param $hashclient
-     * @Route("/addalarme/{hashclient}" , name="add_alarme")
+     * @Route("/addalarme/{hashclient}" , name="add_alarme", options={"expose"=true})
      */
     public function addAlarmeAction(Request $request,$hashclient){
         $classclient=$this->container->getParameter("fyher_client.user_class");
@@ -85,10 +85,20 @@ class AlarmeController extends AbstractController
             $em->persist($alarme);
             $clientExiste->addIdAlarme($alarme);
             $em->flush();
-            return $this->redirectToRoute("client_client_liste");
+           // return $this->redirectToRoute("client_client_liste");
+            return new JsonReponse(array('message' => 'ok', 200));
+
         }
 
-        return $this->render("@FyherClient/alarme/new.html.twig",array("form"=>$form->createView()));
+        $response = new JsonResponse(
+            array(
+                'message' => 'success',
+                'form' => $this->renderView('@FyherClient/alarme/new.html.twig',
+                    array(
+                        'form' => $form->createView(),"url"=>$this->generateUrl("alarme_add_alarme",array("hashclient"=>$hashclient))
+                    ))), 200);
+        return $response;
+       // return $this->render("@FyherClient/alarme/new.html.twig",array("form"=>$form->createView()));
     }
 
 

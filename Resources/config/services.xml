@@ -18,6 +18,15 @@ http://symfony.com/schema/dic/services/services-1.0.xsd">
         <service id="client.gestion" alias="Fyher\ClientBundle\Services\GestionStatutClientService" public="true">
 
         </service>
+
+        <service id="Fyher\ClientBundle\Services\Geoloc" public="true" autowire="true">
+            <argument type="service" id="doctrine.orm.entity_manager"></argument>
+            <argument type="service" id="service_container"></argument>
+            <argument type="string">%fyher_client.token_map%</argument>
+        </service>
+        <service id="fyher.geoloc" alias="Fyher\ClientBundle\Services\Geoloc" public="true" >
+
+        </service>
         <service id="Fyher\ClientBundle\Form\ClientType">
             <argument>%fyher_client.user_class%</argument>
             <tag name="form.type" />

@@ -1,7 +1,10 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
-{{ form_start(form, { 'attr': {'novalidate': 'novalidate',"id":"formnote" } }) }}
+
+{{ form_start(form, { 'attr': {'novalidate': 'novalidate',"id":"formajaxfyher","data-url":url } }) }}
 
         {{ form_widget(form) }}
-<input type="submit" value="Enregistrer" class="btn btn-fw success btn-block" />
+<input type="submit" value="Ajouter une alarme" class="button btn-block" />
 {{ form_end(form) }}
+
+
