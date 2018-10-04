@@ -1,6 +1,6 @@
 fyher:
   entity:
-    notblank: Ce champs ne doit âs être vide
+    notblank: Ce champs ne doit pas être vide
     minlength: Ce champs ne contient pas le bon nombre de caractères
     maxlength: Ce champs contient trop de caractère
 

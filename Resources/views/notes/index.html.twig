@@ -1,7 +1,30 @@
-{% for note in listeNote %}
-    {{ note.tite |capitalize }}
-    {{ descriptionNote |capitalize }}
-    {{ dateCreationNote |date("Y-m-d H:i") }}
-    {{ emailAuteurNote  }}
+<div class="card-header">
+    <div class="row">
+        <div class="col-md-4">
+            <b>Liste des note</b>
+        </div>
+        <div class="col-md-2 offset-md-6">
+            <a href="#" data-link="{{ url("notes_add_note",{"hashclient":client.hashClient}) }}"  data-nom="Ajouter une note pour le client {{ client.nomClient |capitalize }} {{ client.prenomClient | capitalize }}" class="btn btn-sm btn-warning openpopupfyher" data-toggle="tooltip" data-placement="top" title="Ajouter une alarme"><i class="fa fa-sticky-note"></i> </a>
 
-{% endfor %}
+        </div>
+    </div>
+</div>
+<div class="card-body">
+    {% if listeNote %}
+        {% for note in listeNote %}
+            <div class="row">
+                <div class="col-md-12">
+                    <b>{{  note.titreNote |capitalize }}</b> <i> {{ note.dateCreationNote | localizeddate('none', 'none', null, null, ' EEEE d MMMM Y kk:mm')  }}</i> par {{ note.emailAuteurNote }}<br>
+                    {{ note.descriptionNote |capitalize }}
+
+                </div>
+            </div>
+            <br>
+
+
+
+        {% endfor %}
+    {% else %}
+            <b>Aucune note</b>
+    {% endif %}
+</div>

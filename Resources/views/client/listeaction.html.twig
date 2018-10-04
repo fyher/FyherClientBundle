@@ -1,0 +1,30 @@
+<div class="card-header">
+    <b>Liste des actions</b>
+</div>
+<div class="card-body">
+    {% for liste in pagination %}
+        <div class="row">
+            <div class="col-md-4">
+
+                <span class="badge badge-{% if liste.action=="update" %}info{% endif %}{% if liste.action=="delete" %}danger{% endif %}{% if liste.action=="insert" %}success{% endif %}">{{ liste.action | upper }} </span>
+            </div>
+            <div class="col-md-6">
+                {% for key,value in liste.data %}
+                    <b>{{ key }}</b> => {{ value }}
+                {% endfor %}
+            </div>
+            <div class="col-md-2">
+                {% if liste.username %}
+                    Réalisé par  <b>{{ liste.username |capitalize }}</b> le <i>{{ liste.loggedAt | date("Y-m-d H:i") }}</i>
+                {% endif %}
+            </div>
+        </div>
+        <br>
+
+    {% endfor %}
+</div>
+<div class="card-footer">
+    <div class="navigation">
+        {{ knp_pagination_render(pagination,"FyherClientBundle:pagination:pagination.html.twig") }}
+    </div>
+</div>

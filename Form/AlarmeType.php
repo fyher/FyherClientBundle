@@ -8,6 +8,8 @@ use Doctrine\DBAL\Types\TextType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,7 +33,7 @@ class AlarmeType extends AbstractType
         $builder->add("descriptionAlarme",\Symfony\Component\Form\Extension\Core\Type\TextareaType::class,array("label"=>"fyher.form.descriptionalarme"));
         $builder->add("emailRappelAlarme",\Symfony\Component\Form\Extension\Core\Type\TextType::class,array("label"=>"fyher.form.emailrappelalarme"));
         $builder->add("mobileRappelAlarme",\Symfony\Component\Form\Extension\Core\Type\TextType::class,array("label"=>"fyher.form.mobilerappelalarme"));
-        $builder->add("dateRappelAlarme",\Symfony\Component\Form\Extension\Core\Type\TextType::class,array("label"=>"fyher.form.daterappelalarme"));
+        $builder->add("dateRappelAlarme",DateTimeType::class,array("label"=>"fyher.form.daterappelalarme","input"=>"datetime","html5"=>false,"widget"=>"single_text","attr"=>array("class"=>"datetimepicker")));
     }/**
  * {@inheritdoc}
  */

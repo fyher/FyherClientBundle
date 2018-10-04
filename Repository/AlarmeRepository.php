@@ -33,6 +33,21 @@ class AlarmeRepository extends ServiceEntityRepository
 
     }
 
+    public function avenir($idclient){
+
+        $datejour=new \DateTime();
+
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.dateRappelAlarme >= :date ')
+            ->andWhere('a.luAlarme=0')
+            ->setParameter('date', $datejour->format("Y-m-d").'%')
+            ->orderBy("a.dateRappelAlarme","asc")
+            ->getQuery()
+            ->getResult()
+            ;
+
+    }
+
 //    /**
 //     * @return Alarme[] Returns an array of Alarme objects
 //     */

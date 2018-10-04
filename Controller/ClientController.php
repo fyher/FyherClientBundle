@@ -113,7 +113,29 @@ class ClientController extends AbstractController
             return $this->redirectToRoute("client_client_liste");
         }
 
-        $tokenMap=$this->container->getParameter("fyher_client.token_map");
+
+        $listesource=$this->getDoctrine()->getRepository("FyherClientBundle:SourceClient")->findBy(array("idClient"=>$clientExiste->getId()));
+
+        $referer = $request->headers->get('referer');
+        return $this->render("@FyherClient/client/new.html.twig",array("form"=>$form->createView(),"client"=>$clientExiste,
+            "referer"=>$referer,"listesource"=>$listesource));
+
+    }
+
+    /**
+     * @param Request $request
+     * @param $hashclient
+     * @Route("/listeaction/{hashclient}" , name="liste_action_client", options={"expose"=true})
+     */
+    public function listeactionclientAction(Request $request,$hashclient){
+        $classclient=$this->container->getParameter("fyher_client.user_class");
+        $client=new $classclient();
+
+        $clientExiste=$this->getDoctrine()->getRepository(get_class($client))->findOneBy(array("hashClient"=>$hashclient));
+
+        if(!$clientExiste){
+            throw $this->createNotFoundException("le client existe pas");
+        }
 
         $listelog=$this->getDoctrine()->getRepository("Gedmo\Loggable\Entity\LogEntry")->findBy(array("objectId"=>$clientExiste->getId(),"objectClass"=>get_class($client)),array("loggedAt"=>"DESC"));
 
@@ -124,15 +146,8 @@ class ClientController extends AbstractController
             10/*limit per page*/
         );
 
-        $listesource=$this->getDoctrine()->getRepository("FyherClientBundle:SourceClient")->findBy(array("idClient"=>$clientExiste->getId()));
 
-
-
-
-        $referer = $request->headers->get('referer');
-        return $this->render("@FyherClient/client/new.html.twig",array("form"=>$form->createView(),"client"=>$clientExiste,
-            "pagination"=>$pagination,"referer"=>$referer,"listesource"=>$listesource,"tokenMap"=>$tokenMap));
-
+        return $this->render("@FyherClient/client/listeaction.html.twig",array("pagination"=>$pagination));
     }
 
 
@@ -178,5 +193,25 @@ class ClientController extends AbstractController
         $referer = $request->headers->get('referer');
         $this->addFlash('success','fyher.action.modificationsucess');
         return $this->redirect($referer);
+    }
+
+    /**
+     * @param Request $request
+     * @param $hashclient
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/carteclient/{hashclient}" , name="carte_client" , options={"expose"=true})
+     */
+    public function affichecarteclientAction(Request $request,$hashclient){
+        $classclient=$this->container->getParameter("fyher_client.user_class");
+        $client=new $classclient();
+        $clientExiste=$this->getDoctrine()->getRepository(get_class($client))->findOneBy(array("hashClient"=>$hashclient));
+
+        if(!$clientExiste){
+            throw $this->createNotFoundException("le client existe pas");
+        }
+        $tokenMap=$this->container->getParameter("fyher_client.token_map");
+
+        return $this->render("@FyherClient/client/carte.html.twig",array("client"=>$clientExiste,"tokenMap"=>$tokenMap));
+
     }
 }

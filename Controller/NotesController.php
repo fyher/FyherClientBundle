@@ -9,6 +9,7 @@ use Fyher\ClientBundle\Form\ClientType;
 use Fyher\ClientBundle\Form\NoteType;
 use http\Exception\InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -26,7 +27,7 @@ class NotesController extends AbstractController
     /**
      * @param Request $request
      * @param $hashclient
-     * @Route("/listenotesclient/{hashclient}" , name="liste_notes_client")
+     * @Route("/listenotesclient/{hashclient}" , name="liste_notes_client",options={"expose"=true})
      */
     public function listeclientAction(Request $request,$hashclient){
 
@@ -42,7 +43,7 @@ class NotesController extends AbstractController
         $listenote=$clientExiste->getIdNoteClient();
 
 
-        return $this->render("@FyherClient/notes/index.html.twig",array("listeNote"=>$listenote));
+        return $this->render("@FyherClient/notes/index.html.twig",array("listeNote"=>$listenote,"client"=>$clientExiste));
 
 
     }
@@ -81,6 +82,7 @@ class NotesController extends AbstractController
         }
 
         $notes=new Notes();
+        $notes->setEmailAuteurNote($this->getUser()->getEmail());
 
         $form=$this->createForm(NoteType::class,$notes);
 
@@ -89,13 +91,24 @@ class NotesController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
 
             $em=$this->getDoctrine()->getManager();
+            $notes->setIdClient($clientExiste->getId());
             $em->persist($notes);
             $clientExiste->addIdNoteClient($notes);
             $em->flush();
-            return $this->redirectToRoute("client_client_liste");
+           // return $this->redirectToRoute("client_client_liste");
+
+            return new JsonResponse(array('message' => 'ok', 200));
         }
 
-        return $this->render("@FyherClient/notes/new.html.twig",array("form"=>$form->createView()));
+        $response = new JsonResponse(
+            array(
+                'message' => 'success',
+                'form' => $this->renderView('@FyherClient/notes/new.html.twig',
+                    array(
+                        'form' => $form->createView(),"url"=>$this->generateUrl("notes_add_note",array("hashclient"=>$hashclient))
+                    ))), 200);
+        return $response;
+       // return $this->render("@FyherClient/notes/new.html.twig",array("form"=>$form->createView()));
     }
 
 }

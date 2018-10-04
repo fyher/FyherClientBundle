@@ -1,0 +1,13 @@
+/*.flatpickr-time {
+     transition: none !important
+ }
+.flatpickr-calendar{
+    position: fixed !important;
+}*/
+#formajaxfyher .flatpickr-wrapper{
+    display:block !important;
+}
+
+#formajaxfyher .flatpickr-calendar {
+   /* position: absolute !important;*/
+}

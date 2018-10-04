@@ -40,7 +40,7 @@ class AlarmeController extends AbstractController
     /**
      * @param Request $request
      * @param $hashclient
-     * @Route("/listeclient/{hashclient}" , name="liste_client_alarme")
+     * @Route("/listeclient/{hashclient}" , name="liste_client_alarme", options={"expose"=true})
      */
     public function listeclientAction(Request $request,$hashclient){
 
@@ -53,9 +53,13 @@ class AlarmeController extends AbstractController
             throw $this->createNotFoundException("le client existe pas");
         }
 
-        $listealarme=$this->getDoctrine()->getRepository("FyherClientBundle:Alarme")->findBy(array("idClient"=>$clientExiste->getId()));
+        /**
+         * on affiche uniquement les prochaine alarme à venir
+         */
+        $listealarme=$this->getDoctrine()->getRepository("FyherClientBundle:Alarme")->avenir($clientExiste->getId());
 
-        return $this->render("@FyherClient/alarme/index.html.twig",array("liste"=>$listealarme));
+
+        return $this->render("@FyherClient/alarme/index.html.twig",array("liste"=>$listealarme,"client"=>$clientExiste));
     }
 
 
@@ -75,6 +79,9 @@ class AlarmeController extends AbstractController
         }
 
         $alarme=new Alarme();
+        $alarme->setEmailRappelAlarme($this->getUser()->getEmail());
+        $alarme->setLuAlarme(0);
+
         $form=$this->createForm(AlarmeType::class,$alarme);
 
         $form->handleRequest($request);
@@ -83,10 +90,11 @@ class AlarmeController extends AbstractController
 
             $em=$this->getDoctrine()->getManager();
             $em->persist($alarme);
-            $clientExiste->addIdAlarme($alarme);
+            $alarme->setIdClient($clientExiste->getId());
+            $clientExiste->addIdAlarmeClient($alarme);
             $em->flush();
            // return $this->redirectToRoute("client_client_liste");
-            return new JsonReponse(array('message' => 'ok', 200));
+            return new JsonResponse(array('message' => 'ok', 200));
 
         }
 
@@ -123,12 +131,16 @@ class AlarmeController extends AbstractController
      * @Route("/li/{id}" , name="lu_alarme")
      */
     public function luAction(Request $request,Alarme $id){
+        $classclient=$this->container->getParameter("fyher_client.user_class");
+        $client=new $classclient();
+
+        $clientExiste=$this->getDoctrine()->getRepository(get_class($client))->find($id->getIdClient());
         $em=$this->getDoctrine()->getManager();
         $id->setLuAlarme(1);
         $id->setDateLuAlarme(new \DateTime());
         $em->flush();
 
-        return new JsonResponse("200");
+        return $this->forward("FyherClientBundle:Alarme:listeclient",array("hashclient"=>$clientExiste->getHashClient()));
     }
 
 

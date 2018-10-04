@@ -33,20 +33,21 @@ class Alarme
 
     /**
      * @var datetime
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateCreationAlarme;
 
 
     /**
      * @var datetime
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\NotBlank(message="fyher.entity.notblank")
      */
     private $dateRappelAlarme;
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @Assert\NotBlank(message="fyher.entity.notblank")
      * @Assert\Length(
      *     min=1,
@@ -58,7 +59,7 @@ class Alarme
 
     /**
      * @var text
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\NotBlank(message="fyher.entity.notblank")
      * @Assert\Length(
      *     min=1,
@@ -69,7 +70,7 @@ class Alarme
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @Assert\Email()
      * @Assert\NotBlank(message="fyher.entity.notblank")
      */
@@ -77,7 +78,7 @@ class Alarme
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @Assert\NotBlank(message="fyher.entity.notblank")
      * @FyherAssert\Telephone()
      */
@@ -86,7 +87,7 @@ class Alarme
 
     /**
      * @var boolean
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $luAlarme;
 
@@ -99,7 +100,7 @@ class Alarme
 
     /**
      * @var integer
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $idClient;
 
@@ -124,7 +125,7 @@ class Alarme
         return $this->dateCreationAlarme;
     }
 
-    public function setDateCreationAlarme(\DateTimeInterface $dateCreationAlarme): self
+    public function setDateCreationAlarme(?\DateTimeInterface $dateCreationAlarme): self
     {
         $this->dateCreationAlarme = $dateCreationAlarme;
 
@@ -136,7 +137,7 @@ class Alarme
         return $this->dateRappelAlarme;
     }
 
-    public function setDateRappelAlarme(\DateTimeInterface $dateRappelAlarme): self
+    public function setDateRappelAlarme(?\DateTimeInterface $dateRappelAlarme): self
     {
         $this->dateRappelAlarme = $dateRappelAlarme;
 
@@ -148,7 +149,7 @@ class Alarme
         return $this->titreAlarme;
     }
 
-    public function setTitreAlarme(string $titreAlarme): self
+    public function setTitreAlarme(?string $titreAlarme): self
     {
         $this->titreAlarme = $titreAlarme;
 
@@ -160,7 +161,7 @@ class Alarme
         return $this->descriptionAlarme;
     }
 
-    public function setDescriptionAlarme(string $descriptionAlarme): self
+    public function setDescriptionAlarme(?string $descriptionAlarme): self
     {
         $this->descriptionAlarme = $descriptionAlarme;
 
@@ -172,7 +173,7 @@ class Alarme
         return $this->emailRappelAlarme;
     }
 
-    public function setEmailRappelAlarme(string $emailRappelAlarme): self
+    public function setEmailRappelAlarme(?string $emailRappelAlarme): self
     {
         $this->emailRappelAlarme = $emailRappelAlarme;
 
@@ -184,7 +185,7 @@ class Alarme
         return $this->mobileRappelAlarme;
     }
 
-    public function setMobileRappelAlarme(string $mobileRappelAlarme): self
+    public function setMobileRappelAlarme(?string $mobileRappelAlarme): self
     {
         $this->mobileRappelAlarme = $mobileRappelAlarme;
 
@@ -196,7 +197,7 @@ class Alarme
         return $this->luAlarme;
     }
 
-    public function setLuAlarme(bool $luAlarme): self
+    public function setLuAlarme(?bool $luAlarme): self
     {
         $this->luAlarme = $luAlarme;
 
@@ -208,7 +209,7 @@ class Alarme
         return $this->dateLuAlarme;
     }
 
-    public function setDateLuAlarme(\DateTimeInterface $dateLuAlarme): self
+    public function setDateLuAlarme(?\DateTimeInterface $dateLuAlarme): self
     {
         $this->dateLuAlarme = $dateLuAlarme;
 
@@ -220,13 +221,14 @@ class Alarme
         return $this->idClient;
     }
 
-    public function setIdClient(int $idClient): self
+    public function setIdClient(?int $idClient): self
     {
         $this->idClient = $idClient;
 
         return $this;
     }
 
+  
 
 
    
