@@ -1,0 +1,24 @@
+framework:
+  worflows:
+    fyher_client_gestion:
+      type: 'workflow'
+      audit_trail:
+        enabled: true
+      marking_store:
+        type: 'single_state'
+        arguments:
+          - 'statutClient'
+      supports:
+        - Fyher\ClientBundle\Entity\Client
+      initial_place: prospect
+      places:
+        - prospect
+        - client
+        - ancienclient
+      transitions:
+        to_client:
+          from: [prospect,ancienclient]
+          to: client
+        to_ancienclient:
+          from: client
+          to: ancienclient

@@ -1,0 +1,53 @@
+fyher:
+  form:
+    nomclient: Le nom du client
+    prenomclient: Le prénom du client
+    adresseclient: L'adresse du client
+    villeclient: La ville du Client
+    codepostalclient: Le code postal du client
+    numeroficeclient: Numéro de fixe du client
+    numeromobileclient: numéro de mobile du client
+    departementnomclient: le nom du département
+    departementcodeclient: Le numéro du département
+    paysclient: Le pays du client
+    codeinseevilleclient: Le code insee de la ville
+    titrenote: titre de la note
+    descriptionnote: Description de la note
+    emailauteur: email de l'auteur
+    titrealarme: Titre de l'alarme
+    descriptionalarme: Description de l'alarme
+    emailrappelalarme: Email de l'auteur
+    mobilerappelalarme: Mobile rappel alarme
+    daterappelalarme: Date de rappel de l'alarme
+    choisircivilite: Choisir une civilité
+    civiliteclient: Civilité
+    fauxnumero: Faux numéro
+    numerovalie: Valide
+    email: Adresse E-mail
+    anne: Année
+    trancherevenu: Tranche de revenu
+    situation: Situation
+    csp: Csp
+    imposition: Imposition
+    nbenfant: Nombre d'enfant
+    nom: Nom
+
+  action:
+    modificationsucess: Information modifiée avec succés
+    impossibledeleteliaison: Imposisble de supprimer cette élèment, il doit être lier à d'autre élèments
+    supressionsuccess: Supression bien effectué
+
+  table:
+    nomclient: Nom
+    telephoneclient: Téléphone
+    statutclient: Statut
+    adresseclient: Adresse
+    datecreation: Date
+    sourceclient: Source
+    noteclient: Note
+    nbclient: client(s)
+    emailclient: Email
+
+  email:
+    subject:
+      rappelalarme: Rappel alarme

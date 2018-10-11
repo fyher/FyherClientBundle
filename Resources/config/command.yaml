@@ -1,0 +1,4 @@
+services:
+  Fyher\ClientBundle\Command\ConfigCommand:
+    tags:
+    - { name: 'console.command', command: 'fyher:testclient' }

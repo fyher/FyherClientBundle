@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="count">
+                    {{ pagination.getTotalItemCount }} {{ "fyher.table.nbclient" | trans({}) }}
+                </div>
+
+            </div>
+            <div class="card-body">
+
+                <table class="table table-bordered table-striped">
+                    <thead >
+                    <tr>
+                        <th scope="col" {% if pagination.isSorted('nomClient') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'fyher.table.nomclient' | trans({}), 'nomClient') }} </th>
+                        <th scope="col" {% if pagination.isSorted('emailClient') %} class="sorted"{% endif %}> {{ knp_pagination_sortable(pagination, 'fyher.table.emailclient' | trans({}), 'nomClient') }} </th>
+                        <th scope="col" {% if pagination.isSorted('telephoneClient') %} class="sorted"{% endif %}> {{ knp_pagination_sortable(pagination, 'fyher.table.telephoneclient' | trans({}), 'nomClient') }} </th>
+
+                        <th scope="col" {% if pagination.isSorted('adresseClient') %} class="sorted"{% endif %}> {{ knp_pagination_sortable(pagination, 'fyher.table.adresseclient' | trans({}), 'nomClient') }} </th>
+                        <th scope="col" {% if pagination.isSorted('dateCreationClient') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'fyher.table.datecreation' | trans({}), 'nomClient') }} </th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for listeclient in pagination %}
+                        {% set infostatut=fyher_infostatut.decodeStatut(listeclient.statutClient) %}
+                        <tr>
+                            <th scope="row">{% if infostatut %}<span class="badge badge-{{ infostatut["couleur"] }}">{{ listeclient.statutClient|capitalize }}</span>{% endif %}
+                                <a href="{{ url("client_edit_client",{"hashClient":listeclient.hashClient}) }}">{{ listeclient.civiliteClient |capitalize }} {{ listeclient.nomClient |capitalize }} {{ listeclient.prenomClient |capitalize }}</a> </th>
+                            <td>{{ listeclient.emailClient }}</td>
+                            <td>
+                                {% if listeclient.numeroFixeClient  %}
+                                  <a href="tel:{{ listeclient.numeroFixeClient | phoneFyher  }}" class="btn btn-sm btn-dark"><i class="fa fa-phone"></i> {{ listeclient.numeroFixeClient | phoneFyher(false) }} </a>
+                                {% endif %}
+                                {%  if listeclient.numeroMobileClient %}
+                                    <br><br>
+                                    <a href="tel:{{ listeclient.numeroMobileClient | phoneFyher(true) }}" class="btn btn-sm btn-dark"><i class="fa fa-mobile-alt"></i> {{ listeclient.numeroMobileClient | phoneFyher(false) }}</a>
+                                {% endif %}
+                            </td>
+                            <td>{{ listeclient.VilleClient |capitalize }} <i>({{ listeclient.codePostalClient }})</i><br> <b>{{ listeclient.departementNomClient |capitalize }}</b> </td>
+                            <td><i class="fa fa-calendar-alt"></i> {{ listeclient.dateCreationClient | date("Y-m-d") }}
+                                <br><br>
+                                <i class="fa fa-edit"></i> {{ listeclient.dateUpdateClient | date("Y-m-d") }}</td>
+
+
+                        </tr>
+                        <tr>
+
+                        </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination,"FyherClientBundle:pagination:pagination.html.twig") }}
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="fyher_client.rgpd.month_retention" />
+    </parameters>
+
+    <services>
+        <prototype namespace="Fyher\ClientBundle\Repository\" resource="../../Repository/*Repository.php" autowire="true">
+            <tag name="doctrine.repository_service"></tag>
+        </prototype>
+        <service id="Fyher\ClientBundle\Services\GestionStatutClientService" public="true" autowire="true">
+
+        </service>
+        <service id="client.gestion" alias="Fyher\ClientBundle\Services\GestionStatutClientService" public="true">
+
+        </service>
+
+        <service id="Fyher\ClientBundle\Services\Geoloc" public="true" autowire="true">
+            <argument type="service" id="doctrine.orm.entity_manager"></argument>
+            <argument type="service" id="service_container"></argument>
+            <argument type="string">%fyher_client.token_map%</argument>
+        </service>
+        <service id="fyher.geoloc" alias="Fyher\ClientBundle\Services\Geoloc" public="true" >
+
+        </service>
+        <service id="Fyher\ClientBundle\Form\ClientType">
+            <argument>%fyher_client.user_class%</argument>
+            <tag name="form.type" />
+        </service>
+        <service id="Fyher\ClientBundle\Services\SendEmail" public="true" autowire="true">
+            <argument type="service" id="swiftmailer.mailer"/>
+            <argument type="service" id="templating.engine.twig"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="translator"></argument>
+        </service>
+        <service id="fyher.email" alias="Fyher\ClientBundle\Services\SendEmail" public="true">
+
+        </service>
+        <service id="Fyher\ClientBundle\Twig\PhoneExtension">
+            <tag name="twig.extension"></tag>
+        </service>
+    </services>
+
+
+</container>
+
+

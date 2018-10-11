@@ -1,0 +1,41 @@
+
+<div class="card-header">
+    <div class="row">
+        <div class="col-md-4">
+            <b>Liste des alarmes</b>
+        </div>
+        <div class="col-md-2 offset-md-6">
+            <a href="#" data-link="{{ url("alarme_add_alarme",{"hashclient":client.hashClient}) }}"  data-nom="Ajouter une alarme pour le client {{ client.nomClient |capitalize }} {{ client.prenomClient | capitalize }}" class="btn btn-sm btn-warning openpopupfyher" data-toggle="tooltip" data-placement="top" title="Ajouter une alarme"><i class="fa fa-bell"></i> </a>
+
+        </div>
+    </div>
+
+
+</div>
+<div class="card-body">
+    {% if liste %}
+
+        {% for alarme in liste %}
+            <div class="alert alert-warning row">
+                <div class="col-md-10">
+                    <i class="fa fa-bell"></i> {{ alarme.dateRappelAlarme| localizeddate('none', 'none', null, null, ' EEEE d MMMM Y kk:mm') }} <br>
+                    {{ alarme.descriptionAlarme |raw }}
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ url("alarme_lu_alarme",{"id":alarme.id}) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Marquer comme effectuer"><i class="fa fa-check"></i> </a>
+                </div>
+
+            </div>
+
+
+
+        {% endfor %}
+
+    {% else %}
+        <b>Aucune Alarmes</b>
+    {% endif %}
+</div>
+<div class="card-footer">
+
+</div>
+
