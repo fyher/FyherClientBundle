@@ -120,6 +120,90 @@ abstract class Client
      */
     private $paysClient;
 
+    /**
+     * @var date
+     * @ORM\Column(type="date", nullable=true)
+     * @Assert\NotBlank(message="fyher.entity.notblank")
+     * @Gedmo\Versioned()
+     */
+    private $dateNaissanceClient;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\NotBlank(message="fyher.entity.notblank")
+     */
+    private $professionClient;
+
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $emailValideClient;
+
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $telephoneValideFixClient;
+
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $telephoneFauxNumFixClient;
+
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $telephoneValideMobClient;
+
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $telephoneFauxNumMobClient;
+
+    /**
+     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nbEnfantClient;
+
+    /**
+     * @var float
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $impositionClient;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Fyher\ClientBundle\Entity\Csp" , fetch="EXTRA_LAZY" )
+     */
+    private $cspClient;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Fyher\ClientBundle\Entity\Situation" )
+     */
+    private $situationClient;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Fyher\ClientBundle\Entity\TrancheRevenu" )
+     */
+    private $trancheRevenuClient;
+
+    /**
+     * @var date
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $anneImpositionClient;
+
+    /**
+     * @var date
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $anneTrancheRevenuClient;
+
 
     /**
      * @var string
@@ -672,6 +756,198 @@ abstract class Client
         if ($this->idNoteClient->contains($idNoteClient)) {
             $this->idNoteClient->removeElement($idNoteClient);
         }
+
+        return $this;
+    }
+
+    public function getDateNaissanceClient(): ?\DateTimeInterface
+    {
+        return $this->dateNaissanceClient;
+    }
+
+    public function setDateNaissanceClient(?\DateTimeInterface $dateNaissanceClient): self
+    {
+        $this->dateNaissanceClient = $dateNaissanceClient;
+
+        return $this;
+    }
+
+    public function getProfessionClient(): ?string
+    {
+        return $this->professionClient;
+    }
+
+    public function setProfessionClient(?string $professionClient): self
+    {
+        $this->professionClient = $professionClient;
+
+        return $this;
+    }
+
+    public function getEmailValideClient(): ?bool
+    {
+        return $this->emailValideClient;
+    }
+
+    public function setEmailValideClient(?bool $emailValideClient): self
+    {
+        $this->emailValideClient = $emailValideClient;
+
+        return $this;
+    }
+
+    public function getTelephoneValideClient(): ?bool
+    {
+        return $this->telephoneValideClient;
+    }
+
+    public function setTelephoneValideClient(?bool $telephoneValideClient): self
+    {
+        $this->telephoneValideClient = $telephoneValideClient;
+
+        return $this;
+    }
+
+    public function getTelephoneFauxNumClient(): ?bool
+    {
+        return $this->telephoneFauxNumClient;
+    }
+
+    public function setTelephoneFauxNumClient(?bool $telephoneFauxNumClient): self
+    {
+        $this->telephoneFauxNumClient = $telephoneFauxNumClient;
+
+        return $this;
+    }
+
+    public function getNbEnfantClient(): ?int
+    {
+        return $this->nbEnfantClient;
+    }
+
+    public function setNbEnfantClient(?int $nbEnfantClient): self
+    {
+        $this->nbEnfantClient = $nbEnfantClient;
+
+        return $this;
+    }
+
+    public function getImpositionClient(): ?float
+    {
+        return $this->impositionClient;
+    }
+
+    public function setImpositionClient(?float $impositionClient): self
+    {
+        $this->impositionClient = $impositionClient;
+
+        return $this;
+    }
+
+    public function getAnneImpositionClient(): ?\DateTimeInterface
+    {
+        return $this->anneImpositionClient;
+    }
+
+    public function setAnneImpositionClient(?\DateTimeInterface $anneImpositionClient): self
+    {
+        $this->anneImpositionClient = $anneImpositionClient;
+
+        return $this;
+    }
+
+    public function getAnneTrancheRevenuClient(): ?\DateTimeInterface
+    {
+        return $this->anneTrancheRevenuClient;
+    }
+
+    public function setAnneTrancheRevenuClient(?\DateTimeInterface $anneTrancheRevenuClient): self
+    {
+        $this->anneTrancheRevenuClient = $anneTrancheRevenuClient;
+
+        return $this;
+    }
+
+    public function getCspClient(): ?Csp
+    {
+        return $this->cspClient;
+    }
+
+    public function setCspClient(?Csp $cspClient): self
+    {
+        $this->cspClient = $cspClient;
+
+        return $this;
+    }
+
+    public function getSituationClient(): ?Situation
+    {
+        return $this->situationClient;
+    }
+
+    public function setSituationClient(?Situation $situationClient): self
+    {
+        $this->situationClient = $situationClient;
+
+        return $this;
+    }
+
+    public function getTrancheRevenuClient(): ?TrancheRevenu
+    {
+        return $this->trancheRevenuClient;
+    }
+
+    public function setTrancheRevenuClient(?TrancheRevenu $trancheRevenuClient): self
+    {
+        $this->trancheRevenuClient = $trancheRevenuClient;
+
+        return $this;
+    }
+
+    public function getTelephoneValideFixClient(): ?bool
+    {
+        return $this->telephoneValideFixClient;
+    }
+
+    public function setTelephoneValideFixClient(?bool $telephoneValideFixClient): self
+    {
+        $this->telephoneValideFixClient = $telephoneValideFixClient;
+
+        return $this;
+    }
+
+    public function getTelephoneFauxNumFixClient(): ?bool
+    {
+        return $this->telephoneFauxNumFixClient;
+    }
+
+    public function setTelephoneFauxNumFixClient(?bool $telephoneFauxNumFixClient): self
+    {
+        $this->telephoneFauxNumFixClient = $telephoneFauxNumFixClient;
+
+        return $this;
+    }
+
+    public function getTelephoneValideMobClient(): ?bool
+    {
+        return $this->telephoneValideMobClient;
+    }
+
+    public function setTelephoneValideMobClient(?bool $telephoneValideMobClient): self
+    {
+        $this->telephoneValideMobClient = $telephoneValideMobClient;
+
+        return $this;
+    }
+
+    public function getTelephoneFauxNumMobClient(): ?bool
+    {
+        return $this->telephoneFauxNumMobClient;
+    }
+
+    public function setTelephoneFauxNumMobClient(?bool $telephoneFauxNumMobClient): self
+    {
+        $this->telephoneFauxNumMobClient = $telephoneFauxNumMobClient;
 
         return $this;
     }

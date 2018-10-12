@@ -38,6 +38,7 @@ class SendEmail
     {
         $mail = (new \Swift_Message());
 
+
         $mail->setFrom("contact@fyher.com","test" )
             ->setTo($to)
             ->setSubject($subject)
@@ -45,5 +46,25 @@ class SendEmail
             ->setContentType("text/html");
 
         return $this->mailer->send($mail);
+    }
+
+
+    public function envoiemailclient($to,$from,$contenu,$hash,$sujet){
+        $mail = (new \Swift_Message());
+
+
+        $mail->setFrom("contact@fyher.com","test" )
+            ->setTo($to)
+            ->setSubject($sujet)
+            ->setBody($contenu)
+            ->setContentType("text/html");
+
+        //return $this->mailer->send($mail);
+        $headers = $mail->getHeaders();
+        $headers->addTextHeader('X-Mailgun-Variables', json_encode(['hash_fyher_client' => $hash]));
+
+        //$id=$mail->getId();
+        return $this->mailer->send($mail);
+
     }
 }

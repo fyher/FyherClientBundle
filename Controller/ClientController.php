@@ -7,6 +7,7 @@ use Fyher\ClientBundle\Entity\Source;
 use Fyher\ClientBundle\Entity\SourceClient;
 use Fyher\ClientBundle\Form\ClientHandler;
 use Fyher\ClientBundle\Form\ClientType;
+use Mailgun\Mailgun;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -70,7 +71,7 @@ class ClientController extends AbstractController
         }
 
 
-        return $this->render("@FyherClient/client/new.html.twig",array("form"=>$form->createView()));
+        return $this->render("@FyherClient/client/new.html.twig",array("form"=>$form->createView(),"open"=>true));
     }
 
 
@@ -90,6 +91,23 @@ class ClientController extends AbstractController
             throw $this->createNotFoundException("le client existe pas");
         }
 
+
+      /*  $mailgun=new Mailgun("key-149451630b8bca505cb9d1a2290ce690");
+       $domaine="caen-cle-auto.com";
+        $queryString = array(
+            'message-id'        => '02f2632d4672ea3dfbfb96c990ce3c0f@51.38.191.72',
+
+        );*/
+
+
+
+        //get domaine events
+    // dump($mailgun->get("$domaine/events",$queryString));
+
+        //02f2632d4672ea3dfbfb96c990ce3c0f@51.38.191.72
+      //  $r=$this->get("fyher.email")->envoiemailclient("cedric@driaux.com","contact@fyher.com","bonjour dfsdf ddff","56657657FGHFGHFGHFGHFGHFGHFGHfffFGH","hashtest2 ff");
+
+
         if(!$clientExiste->getLatitudeClient()){
             $infoadresse= $this->get("fyher.geoloc")->geoloc($clientExiste->getAdresseClient()." ".$clientExiste->getCodePostalClient()." ".$clientExiste->getVilleClient());
 
@@ -105,19 +123,28 @@ class ClientController extends AbstractController
 
         $form=$this->createForm(ClientType::class,$clientExiste);
         $form->handleRequest($request);
+        $open=false;
+        if($form->isSubmitted()){
+            $open=true;
+        }
         if($form->isSubmitted() && $form->isValid()){
 
             $em=$this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success','fyher.action.modificationsucess');
-            return $this->redirectToRoute("client_client_liste");
+            $open=false;
+          //  return $this->redirectToRoute("client_client_liste");
         }
 
+        $clientExiste=$this->getDoctrine()->getRepository(get_class($client))->findOneBy(array("hashClient"=>$hashClient));
 
         $listesource=$this->getDoctrine()->getRepository("FyherClientBundle:SourceClient")->findBy(array("idClient"=>$clientExiste->getId()));
 
         $referer = $request->headers->get('referer');
-        return $this->render("@FyherClient/client/new.html.twig",array("form"=>$form->createView(),"client"=>$clientExiste,
+
+        return $this->render("@FyherClient/client/new.html.twig",array(
+            "open"=>$open,
+            "form"=>$form->createView(),"client"=>$clientExiste,
             "referer"=>$referer,"listesource"=>$listesource));
 
     }

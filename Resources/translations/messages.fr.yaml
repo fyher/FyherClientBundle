@@ -21,9 +21,25 @@ fyher:
     daterappelalarme: Date de rappel de l'alarme
     choisircivilite: Choisir une civilité
     civiliteclient: Civilité
+    fauxnumero: Faux numéro
+    numerovalie: Valide
+    email: Adresse E-mail
+    anne: Année
+    trancherevenu: Tranche de revenu
+    situation: Situation
+    csp: Csp
+    imposition: Imposition
+    nbenfant: Nombre d'enfant
+    nom: Nom
+    valeurmin: Valeur minimun
+    valeurmax: Valeur maximun
+    datenaissance: Date de naissance
+    profession: Proféssion
 
   action:
     modificationsucess: Information modifiée avec succés
+    impossibledeleteliaison: Imposisble de supprimer cette élèment, il doit être lier à d'autre élèments
+    supressionsuccess: Supression bien effectué
 
   table:
     nomclient: Nom

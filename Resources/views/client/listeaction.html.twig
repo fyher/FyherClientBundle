@@ -3,23 +3,23 @@
 </div>
 <div class="card-body">
     {% for liste in pagination %}
-        <div class="row">
-            <div class="col-md-4">
+        <div class="row alert alert-info" style="font-size:12px;">
+            <div class="col-md-3">
 
                 <span class="badge badge-{% if liste.action=="update" %}info{% endif %}{% if liste.action=="delete" %}danger{% endif %}{% if liste.action=="insert" %}success{% endif %}">{{ liste.action | upper }} </span>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-9">
                 {% for key,value in liste.data %}
-                    <b>{{ key }}</b> => {{ value }}
+                    <b>{{ key }}</b> => {% if value.timestamp is defined %}{{ value |   date("Y-m-d H:i:s")  }} {% else %} {{ value }} {% endif %}
                 {% endfor %}
-            </div>
-            <div class="col-md-2">
+                <br>
                 {% if liste.username %}
                     Réalisé par  <b>{{ liste.username |capitalize }}</b> le <i>{{ liste.loggedAt | date("Y-m-d H:i") }}</i>
                 {% endif %}
             </div>
+
         </div>
-        <br>
+
 
     {% endfor %}
 </div>

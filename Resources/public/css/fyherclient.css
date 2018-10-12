@@ -11,3 +11,18 @@
 #formajaxfyher .flatpickr-calendar {
    /* position: absolute !important;*/
 }
+
+.boxville{
+    border:1px solid gray;padding:10px;background-color:#ffffff;
+    position: absolute;border-radius:5px;z-index:2;
+    overflow: auto;
+    height:160px;
+}
+
+.liste_ville_zoneville{
+}
+.liste_ville_zoneville:hover{
+    text-decoration: underline;
+    color:#2a62bc;
+    cursor: pointer;
+}

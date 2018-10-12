@@ -1,0 +1,10 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+
+{{ form_start(form, { 'attr': {'novalidate': 'novalidate',"id":"formajaxfyher","data-url":url } }) }}
+
+        {{ form_widget(form) }}
+<input type="submit" value="Ajouter une tranche de revenu" class="button btn-block" />
+{{ form_end(form) }}
+
+

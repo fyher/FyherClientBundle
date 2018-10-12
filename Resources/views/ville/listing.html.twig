@@ -1,0 +1,17 @@
+{% for l in liste %}
+    <div  data-codepostale="{% if l.context[0] %}{{ l.context[0].text }}{% endif %}"
+          data-ville="{% if l.context[1] %}{{ l.context[1].text }}{% endif %}"
+          data-departement="{% if l.context[2].text is defined%}{{ l.context[2].text }} {% endif %}"
+          data-codedepartement="{% if l.context[2].short_code  is defined%}{{ l.context[2].short_code }}{% endif %}"
+          data-pays="{% if l.context[3].text is defined %}{{ l.context[3].text }}{% endif %}"
+          data-latitude="{{ l.center[0] }}"
+          data-longitude="{{ l.center[1] }}"
+          data-addresse-numero="{% if l.address is defined %}{{ l.address }}{% endif %}"
+          data-adresse="{% if l.text is defined %}{{ l.text }}{% endif %}"
+          data-wiki="{% if l.context[1].wikidata is defined %}{{ l.context[1].wikidata }}{% endif %}"
+           class="liste_ville_zoneville chosse_ville"
+    ><i class="fa fa-map-pin"></i> {{ l.place_name  | capitalize}}
+    </div>
+    <hr>
+{% endfor %}
+

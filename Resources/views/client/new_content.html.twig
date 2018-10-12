@@ -1,22 +1,18 @@
-
 <div class="row">
     <div class="col-md-8">
+
         <div class="card">
-            <div class="card-header">
+            <div class="card-header" >
                 <div class="row">
                     <div class="col-md-4">
                         {% if client is defined %}
                             <b>Fiche :</b>  {{ client.nomClient |capitalize }} {{ client.prenomClient|capitalize }}&nbsp;&nbsp;
-                            {% if client.activeClient==1 %}
-                              <a href="{{ url("client_activation_client",{"hashClient":client.hashClient,"statut":0}) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Désactiver le client">ACTIF</a>
-                            {% else %}
-                              <a href="{{ url("client_activation_client",{"hashClient":client.hashClient,"statut":1}) }}" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Activer le client"> INACTIF</a>
-                            {% endif %}
+
 
                         {% endif %}
 
                     </div>
-                    <div class="col-md-3 offset-md-3" align="right">
+                    <div class="col-md-3 offset-md-1" align="right">
                         {% if referer is defined %}
                             <a href="{{ referer }}" class="btn btn-dark btn-sm " data-toggle="tooltip" data-placement="top" title="Revenir en arrière"><i class="fa fa-undo"></i> </a>
                         {% endif %}
@@ -25,20 +21,37 @@
                             <a href="{{ url("client_client_add") }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Ajouter un client"><i class="fa fa-plus"></i> </a>
                         {% endif %}
                     </div>
-                    <div class="col-md-2" align="right">
+                    <div class="col-md-4" align="right">
                         {% if client is defined %}
                             <a href="#" class="btn btn-success btn-sm edit_form_fyher" data-toggle="tooltip" data-placement="top" title="Editer la fiche client"><i class="fa fa-edit"></i> </a>
                             <a href="#" data-link="{{ url("alarme_add_alarme",{"hashclient":client.hashClient}) }}"  data-nom="Ajouter une alarme pour le client {{ client.nomClient |capitalize }} {{ client.prenomClient | capitalize }}" class="btn btn-sm btn-warning openpopupfyher" data-toggle="tooltip" data-placement="top" title="Ajouter une alarme"><i class="fa fa-bell"></i> </a>
                             <a href="#" data-link="{{ url("notes_add_note",{"hashclient":client.hashClient}) }}" data-nom="Ajouter une note pour le client {{ client.nomClient |capitalize }} {{ client.prenomClient |capitalize}}" class="btn btn-sm btn-warning openpopupfyher" data-toggle="tooltip" data-placement="top" title="Ajouter une note"><i class="fa fa-sticky-note"></i> </a>
+                            {% if client.activeClient==1 %}
+                                <a href="{{ url("client_activation_client",{"hashClient":client.hashClient,"statut":0}) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Désactiver le client">ACTIF</a>
+                            {% else %}
+                                <a href="{{ url("client_activation_client",{"hashClient":client.hashClient,"statut":1}) }}" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Activer le client"> INACTIF</a>
+                            {% endif %}
                         {% endif %}
+
                     </div>
                 </div>
            </div>
+            {% if open %}
+                <script>
+                    $( document ).ready(function() {
+                        $("select").chosen();
+                    });
+                </script>
+            {% endif %}
             {% if client is defined %}
-                <div class="card-body edit_fyher_info">
+
+                <div class="card-body edit_fyher_info"  style="{% if  open  %}display:none{% endif %}">
+
                     <div class="row">
                         <div class="col-md-12">
+
                             {{ client.civiliteClient |capitalize }} {{ client.nomClient|capitalize }} {{ client.prenomClient|capitalize }}
+                            <br>{% if client.nbEnfantClient>0 %}  <b>Enfant(s):</b> {% for i in 1.. client.nbEnfantClient%} <i class="fa fa-user"></i>  {% endfor %}{% endif %}
                         </div>
                     </div>
                     <div class="row">
@@ -48,96 +61,315 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <b>Téléphone Mobile:</b> {{ client.numeroMobileClient | phoneFyher(false) }}
+                            <b>Téléphone Mobile:</b> {{ client.numeroMobileClient | phoneFyher(false) }} {% if client.telephoneValideMobClient==1 %}<i class="fa fa-check text-success"></i> {% else %} <i class="fa fa-check text-warning"></i> {% endif %}
+                            {% if client.telephoneFauxNumMobClient==0 %} <i class="fa fa-phone text-success"></i> {% else %}  <i class="fa fa-phone text-danger"></i>{% endif %}
                         </div>
                         <div class="col-md-6">
-                            <b>Téléphone Fixe:</b> {{ client.numeroFixeClient | phoneFyher(false) }}
+                            <b>Téléphone Fixe:</b> {{ client.numeroFixeClient | phoneFyher(false) }} {% if client.telephoneValideFixClient==1 %}<i class="fa fa-check text-success"></i> {% else %} <i class="fa fa-check text-warning"></i> {% endif %}
+                            {% if client.telephoneFauxNumFixClient==0 %} <i class="fa fa-phone text-success"></i> {% else %}  <i class="fa fa-phone text-danger"></i>{% endif %}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Email :</b> {{ client.emailClient }} {% if client.emailValideclient==1 %} <i class="fa fa-check text-sucess"></i> {% else %} <i class="fa fa-check text-warning"></i> {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <a href="" class="btn btn-sm btn-info">Envoyer un Email</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <b>CSP</b> {% if client.cspClient %} {{ client.cspClient.nom |capitalize }}{% endif %}
+                        </div>
+                        <div class="col-md-4">
+                            <b>Situation</b> {% if client.situationClient %} {{ client.situationclient.nom |capitalize }} {% endif %}
+                        </div>
+                        <div class="col-md-4">
+                            <b>Tranche de revenu</b> {% if client.trancheRevenuClient %} {{ client.trancheRevenuClient.nom |capitalize }} / {{ client.anneTrancheRevenuClient | date("Y") }} {% endif %}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>Imposition</b>  {% if client.impositionClient %}{{ client.impositionClient | number_format(2,',',' ') }} € en  {{ client.anneImpositionClient | date("Y") }} {% endif %}
                         </div>
                     </div>
                 </div>
             {% endif %}
-            <div class="card-body edit_fyher_form" style="display:none">
+
+            <div class="card-body edit_fyher_form" style="{% if not open  %}display:none{% endif %}">
                 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
                 {{ form_start(form, { 'attr': {'novalidate': 'novalidate',"id":"formnote" } }) }}
+
                 <div class="row">
-                    <div class="col-md-4">
-                        {{ form_row(form.civiliteClient) }}
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.civiliteClient)  }}</b>
+
                     </div>
-                    <div class="col-md-4">
-                        {{ form_row(form.nomClient) }}
+                    <div class="col-md-8">
+                        {{ form_widget(form.civiliteClient) }}
                     </div>
-                    <div class="col-md-4">
-                        {{ form_row(form.prenomClient) }}
-                    </div>
-                </div>
+                </div><br>
                 <div class="row">
-                    <div class="col-md-4">
-                        {{ form_row(form.adresseClient) }}
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.nomClient)  }}</b>
                     </div>
-                    <div class="col-md-4">
-                        {{ form_row(form.villeClient) }}
+                    <div class="col-md-8">
+                        {{ form_widget(form.nomClient) }}
                     </div>
-                    <div class="col-md-4">
-                        {{ form_row(form.codePostalClient) }}
-                    </div>
-                </div>
+                </div><br>
                 <div class="row">
-                    <div class="col-md-3">
-                        {{ form_row(form.departementNomClient) }}
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.prenomClient)}}</b>
                     </div>
-                    <div class="col-md-3">
-                        {{ form_row(form.departementCodeClient) }}
+                    <div class="col-md-8">
+                        {{ form_widget(form.prenomClient) }}
                     </div>
-                    <div class="col-md-3">
-                        {{ form_row(form.paysClient) }}
-                    </div>
-                    <div class="col-md-3">
-                        {{ form_row(form.codeInseeVilleClient) }}
-                    </div>
-                </div>
+                </div><br>
                 <div class="row">
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.nbEnfantClient)  }}</b>
+                    </div>
+                    <div class="col-md-8">
+                        {{ form_widget(form.nbEnfantClient) }}
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.dateNaissanceClient)  }}</b>
+                    </div>
+                    <div class="col-md-8">
+                        {{ form_widget(form.dateNaissanceClient) }}
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.professionClient)  }}</b>
+                    </div>
+                    <div class="col-md-8">
+                        {{ form_widget(form.professionClient) }}
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.emailClient)}}</b>
+                    </div>
+                    <div class="col-md-5">
+                        {{ form_widget(form.emailClient) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form_widget(form.emailValideClient) }}
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.cspClient)}}</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{ form_widget(form.cspClient) }}
+                    </div>
+                    <div class="col-md-1">
+                        <a href="#"  data-link="{{ url("csp_add_csp") }}" data-nom="Ajouter une csp" class="btn  btn-success openpopupfyher" data-toggle="tooltip" data-placement="top" title="Ajouter une csp"><i class="fa fa-plus"></i> </a>
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.situationClient)}}</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{ form_widget(form.situationClient) }}
+                    </div>
+                    <div class="col-md-1">
+                        <a href="#" data-link="{{ url("situation_add_situation") }}" data-nom="Ajouter une situation" class="btn  btn-success openpopupfyher" data-toggle="tooltip" data-placement="top" title="Ajouter une situation"><i class="fa fa-plus"></i> </a>
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.trancheRevenuClient)}}</b>
+                    </div>
+                    <div class="col-md-5">
+                        {{ form_widget(form.trancheRevenuClient) }}
+                    </div>
+                    <div class="col-md-1">
+                        <a href="#" data-link="{{ url("tranchereveun_add_trancherevenu") }}" data-nom="Ajouter une tranche de revenu" class="btn  btn-success openpopupfyher" data-toggle="tooltip" data-placement="top" title="Ajouter une tranche de revenu"><i class="fa fa-plus"></i> </a>
+                    </div>
+                    <div class="col-md-2">
+                        {{ form_errors(form.anneTrancheRevenuClient) }}
+                        {{ form_widget(form.anneTrancheRevenuClient) }}
+
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.impositionClient) }}</b>
+                    </div>
                     <div class="col-md-6">
-                        {{ form_row(form.numeroFixeClient) }}
+                        {{ form_widget(form.impositionClient) }}
                     </div>
-                    <div class="col-md-6">
-                        {{ form_row(form.numeroMobileClient) }}
+                    <div class="col-md-2">
+                        {{ form_errors(form.anneImpositionClient) }}
+                        {{ form_widget(form.anneImpositionClient) }}
                     </div>
-                </div>
+
+                </div><br>
+
+               <div class="row">
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.adresseClient) }}</b>
+                    </div>
+                    <div class="col-md-8">
+                        {{ form_widget(form.adresseClient) }}
+                        <div  class="boxville" id="listingville_fyher" style="display:none;">
+
+                        </div>
+                    </div>
+
+                </div><br>
+                <div class="row">
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.villeClient) }}</b>
+                    </div>
+                    <div class="col-md-8">
+                        {{ form_widget(form.villeClient) }}
+
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.codePostalClient) }}</b>
+                    </div>
+                    <div class="col-md-8">
+                        {{ form_widget(form.codePostalClient) }}
+
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.departementNomClient) }}</b>
+                    </div>
+                    <div class="col-md-8">
+                        {{ form_widget(form.departementNomClient) }}
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.departementCodeClient) }}</b>
+                    </div>
+                    <div class="col-md-8">
+                        {{ form_widget(form.departementCodeClient) }}
+                    </div>
+                </div><br>
+
+                <div class="row">
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.paysClient) }}</b>
+                    </div>
+                    <div class="col-md-8">
+
+                        {{ form_widget(form.paysClient) }}
+                    </div>
+                </div><br>
+
+                <div class="row">
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.numeroFixeClient) }}</b>
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_widget(form.numeroFixeClient) }}
+                    </div>
+                    <div class="col-md-2">
+
+                        {{ form_widget(form.telephoneValideFixClient) }}
+                    </div>
+                    <div class="col-md-2">
+                        {{ form_widget(form.telephoneFauxNumFixClient) }}
+                    </div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-4" align="right">
+                        <b>{{ form_label(form.numeroMobileClient) }}</b>
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_widget(form.numeroMobileClient) }}
+                    </div>
+                    <div class="col-md-2">
+
+                        {{ form_widget(form.telephoneValideMobClient) }}
+                    </div>
+                    <div class="col-md-2">
+                        {{ form_widget(form.telephoneFauxNumMobClient) }}
+                    </div>
+                </div><br>
                 {{ form_rest(form) }}
+                <div class="row">
+                    <div class="col-md-4">
+
+                    </div>
+                    <div class="col-md-8" align="right">
+                        <input type="submit" value="{% if client  is defined%}Modifier{% else %}Enregistrer{% endif %}" class="btn btn-success success " />
+
+                    </div>
+                </div>
 
 
-                <input type="submit" value="{% if client  is defined%}Modifier{% else %}Enregistrer{% endif %}" class="btn btn-fw success btn-block button" />
-                {{ form_end(form) }}
+               {{ form_end(form) }}
             </div>
             <div class="card-footer">
 
             </div>
         </div>
         <br>
-        <div class="card zone_fyher_affiche_information" data-url="{{ url("notes_liste_notes_client",{"hashclient":client.hashclient}) }}">
-            <div class="card-header">
-                <b>Liste des notes</b>
-            </div>
-            <div class="card-body">
+        {% if client is defined %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card zone_fyher_affiche_information" data-url="{{ url("notes_liste_notes_client",{"hashclient":client.hashclient}) }}">
+                        <div class="card-header">
+                            <b>Liste des notes</b>
+                        </div>
+                        <div class="card-body">
 
-            </div>
-            <div class="card-footer">
+                        </div>
+                        <div class="card-footer">
 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="card zone_fyher_affiche_information" data-url="{{ url("alarme_liste_client_alarme",{"hashclient":client.hashclient}) }}">
+                        <div class="card-header">
+                            <b>Liste des alarmes à venir</b>
+                        </div>
+                        <div class="card-body">
+
+                        </div>
+                        <div class="card-footer">
+
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+
+        {% endif %}
     </div>
     <div class="col-md-4">
+        {% if client is defined %}
         <div class="card">
             <div class="card-header">
                 <b>Source(s)</b>
             </div>
             <div class="card-body">
                 {% for l in listesource %}
-                        <a href="{{ l.idSource.urlSource }}" target="_blank">{{ l.idSource.urlSource }}</a>  le {{ l.dateCreationSourceClient | date("Y-m-d H:i") }} <br>
+                    <div class="alert alert-warning" style="font-size:12px;">
+                        le {{ l.dateCreationSourceClient | date("Y-m-d H:i") }}<br>
                         {% for key,value in l.dataSourceClient %}
                                 <b>{{ key  }}</b> => {{ value }}
                             {% endfor %}
+                        <br><b>Page:</b>  <a href="{{ l.idSource.urlSource }}" target="_blank">{{ l.idSource.urlSource }}</a>
+                    </div>
+                    <br>
                 {% endfor %}
             </div>
         </div>
@@ -145,39 +377,27 @@
         <div class="card zone_fyher_affiche_information" data-url="{{ url("client_carte_client",{"hashclient":client.hashclient}) }}">
             <div class="card-header">
                 <b>Géolocalisation</b>
+                <br>
             </div>
             <div class="card-body">
                 chargement de la carte en cours ...
             </div>
         </div>
-        <br>
-        <div class="card zone_fyher_affiche_information" data-url="{{ url("alarme_liste_client_alarme",{"hashclient":client.hashclient}) }}">
-            <div class="card-header">
-                <b>Liste des alarmes à venir</b>
-            </div>
-            <div class="card-body">
 
-            </div>
-            <div class="card-footer">
+            <br>
+            <div class="card zone_fyher_affiche_information" data-url="{{ url("client_liste_action_client",{"hashclient":client.hashclient}) }}">
+                <div class="card-header">
+                    <b>Liste des actions</b>
+                </div>
+                <div class="card-body">
 
+                </div>
+                <div class="card-footer">
+
+                </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 </div>
-<br>
-<div class="row">
-    <div class="col-md-12">
-        <div class="card zone_fyher_affiche_information" data-url="{{ url("client_liste_action_client",{"hashclient":client.hashclient}) }}">
-            <div class="card-header">
-                <b>Liste des actions</b>
-            </div>
-            <div class="card-body">
 
-            </div>
-            <div class="card-footer">
-
-            </div>
-        </div>
-    </div>
-</div>
 

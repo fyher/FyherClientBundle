@@ -16,7 +16,7 @@
     {% if liste %}
 
         {% for alarme in liste %}
-            <div class="alert alert-warning row">
+            <div class="alert alert-warning row" style="font-size:12px;">
                 <div class="col-md-10">
                     <i class="fa fa-bell"></i> {{ alarme.dateRappelAlarme| localizeddate('none', 'none', null, null, ' EEEE d MMMM Y kk:mm') }} <br>
                     {{ alarme.descriptionAlarme |raw }}
